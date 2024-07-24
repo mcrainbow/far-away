@@ -11,12 +11,28 @@ function App() {
     { id: 3, description: "Charge", quantity: 2, packed: true },
   ]);
 
+  function handleDelete(id) {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  function togglePacked(id) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form setItems={setItems} />
-      <PackingList items={items} />
-      <Stats />
+      <PackingList
+        items={items}
+        handleDelete={handleDelete}
+        togglePacked={togglePacked}
+      />
+      <Stats items={items} />
     </div>
   );
 }
