@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 
-export default function Form({ setItems }) {
+export default function Form({ handleAdd }) {
   const [quantity, setQuantity] = useState(1);
-  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!name) return;
+    if (!description) return;
 
-    const newItem = {
-      id: Date.now(),
-      description: name,
-      quantity,
-      packed: false,
-    };
+    handleAdd(description, quantity);
 
-    setItems((prev) => [...prev, newItem]);
-
-    setName("");
+    setDescription("");
     setQuantity(1);
   }
 
@@ -33,10 +26,10 @@ export default function Form({ setItems }) {
         ))}
       </select>
       <input
-        value={name}
+        value={description}
         type="text"
         placeholder="Item..."
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <button>Add</button>
     </form>

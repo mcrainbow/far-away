@@ -15,22 +15,37 @@ function App() {
     setItems((prev) => prev.filter((item) => item.id !== id));
   }
 
-  function togglePacked(id) {
+  function handleTogglePacked(id) {
     setItems((items) =>
       items.map((item) =>
         item.id === id ? { ...item, packed: !item.packed } : item
       )
     );
   }
+  function handleAdd(description, quantity) {
+    const newItem = {
+      id: Date.now(),
+      description,
+      quantity,
+      packed: false,
+    };
+
+    setItems((prev) => [...prev, newItem]);
+  }
+
+  function handleClear() {
+    setItems([]);
+  }
 
   return (
     <div className="app">
       <Logo />
-      <Form setItems={setItems} />
+      <Form handleAdd={handleAdd} />
       <PackingList
         items={items}
         handleDelete={handleDelete}
-        togglePacked={togglePacked}
+        togglePacked={handleTogglePacked}
+        handleClear={handleClear}
       />
       <Stats items={items} />
     </div>
